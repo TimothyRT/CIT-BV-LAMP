@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomePage BV</title>
+    {% block stylesheet %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='styling/homepage_bv.css') }}">
+    {% endblock %}
+</head>
+<body>
+    <div class="left">
+        <div class="left-box">
+            <img src="static\images\animation.webp" alt="animasi" width="1000" height="1000" />
+        </div>
+    </div>
+    <div class="right">
+        <div class="right-box">
+            <img src="static\images\logo_utama.svg" alt="tebak_lampu_text" width="1000" height="1000" />
+            <button class="button" id="playButton">Play</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            window.location.href = '/homepage';
+        });
+    </script>
+</body>
+</html>

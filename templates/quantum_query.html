@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styling/quantum_query.css') }}">
+{% endblock %}
+.main_section {
+  background-color: transparent;
+}
+
+{% block rules %}
+<div id="rules">
+    <h2 id="rule_title">Rules</h2>
+    <ul>
+      <li>Ini merupakan permainan Tebak Secret Number.</li>
+      <li>User dapat menebak angka rahasia dengan bantuan oracle.</li>
+      <li>Dalam permainan, pemain dapat menyalakan listrik setiap lampu, dan bertanya kepada oracle. </li>
+      <li>Oracle akan melihat lampu, dan memberitahu jumlah yang menyala (Ganjil / Genap).</li>
+      <li>Lampu yang rusak akan dianggap "0" dan yang dapat menyala akan dianggap "1"</li>
+      <li>Permainan berakhir jika pemain dapat menebak dengan benar, atau salah bertanya hingga kesempatan habis.</li>
+    </ul>
+  </div>
+{% endblock %}
+{% block content %}
+<img class ="logo_title"src=".\static\images\logo.svg" alt="Tebak Lampu">
+<form action="/process_game_type" method="post" id="game_form" onsubmit="return validateForm()">
+        <label for="gameType">Select Game Type:</label>
+    <select id="gameType" name="gameType">
+    <option value="player_game">Player</option>
+    <option value="classic_computer_game">Classic Computer</option>
+    <option value="quantum_computer_game">Quantum Computer</option>
+    </select>
+
+    <br><br>
+    <label for="secretLength">Secret number length:</label>
+    <select id="secretLength" name="secretLength">
+        <option value="4">4</option>
+        <option value="6">6</option>
+        <option value="8">8</option>
+        <option value="10">10</option>
+    </select>
+    <br><br>
+    <label for="inputChoice">Choose Input Type:</label>
+    <select id="inputChoice" name="inputChoice" onchange="toggleInputType()">
+      <option value="direct">Direct Input</option>
+      <option value="indirect">Indirect Input</option>
+    </select>
+    
+    <div id="directInputContainer" class="input-container">
+      <label for="inputSecretNumber">Secret Number:</label>
+    <select id="inputSecretNumber" name="inputSecretNumber" onchange="toggleInputTypeA()">
+      <option value="random">Random</option>
+      <option value="not_random">Not Random</option>
+    </select>
+  </div>
+  <input type="hidden" id="secretNumbers" name="secretNumbers">
+  <div id="lampContainer" style="display: none;"> 
+
+  </div>
+    <div id="indirectInputContainer" class="input-container" style="display: none;">
+      <div class="qr-code-container">
+        <img src="{{ qr_path }}" alt="QR Code">
+      </div>
+    </div>    
+    <button type="submit" onclick="readBinarySecret();">Start Game</button>
+</form>
+{% endblock %}
+
+{%block script%}
+<script>
+    function toggleInputType() {
+        const inputChoice = document.getElementById('inputChoice').value;
+        const directInputContainer = document.getElementById('directInputContainer');
+        const indirectInputContainer = document.getElementById('indirectInputContainer');
+    
+        if (inputChoice === 'direct') {
+          directInputContainer.style.display = 'block';
+          indirectInputContainer.style.display = 'none';
+        } else if (inputChoice === 'indirect') {
+          directInputContainer.style.display = 'none';
+          indirectInputContainer.style.display = 'block';
+        }
+      }
+    
+    function toggleInputTypeA() {
+      const inputChoice = document.getElementById('inputSecretNumber').value;
+      const lampContainer = document.getElementById("lampContainer");
+      if (inputChoice === 'random') {
+        lampContainer.style.display = 'none';
+        document.getElementById("secretNumber").value = ""
+      } else if (inputChoice === 'not_random') {
+        generateLamps();
+        lampContainer.style.display = 'block';
+
+      }
+    }
+
+    function generateLamps() {
+      const lampContainer = document.getElementById("lampContainer");
+      const secretLength = parseInt(document.getElementById("secretLength").value);
+      lampContainer.innerHTML = ""; 
+
+      for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
+          const label = document.createElement("label");
+          label.classList.add("toggle-label");
+          label.textContent = `Lamp ${lampNumber + 1}:`;
+
+          const toggleButton = document.createElement("label");
+          toggleButton.classList.add("toggle-button");
+
+          const checkbox = document.createElement("input");
+          checkbox.setAttribute("type", "checkbox");
+          checkbox.setAttribute("name", `lamp${lampNumber}`);
+          checkbox.setAttribute("id", `lamp${lampNumber}`);
+
+          const slider = document.createElement("span");
+          slider.classList.add("slider");
+
+          const greenBox = document.createElement("span");
+          greenBox.classList.add("green-box");
+
+          toggleButton.appendChild(checkbox);
+          toggleButton.appendChild(slider);
+          toggleButton.appendChild(greenBox);
+
+          lampContainer.appendChild(label);
+          lampContainer.appendChild(toggleButton);
+          lampContainer.appendChild(document.createElement("br"));
+      }
+  }
+
+  function readBinarySecret() {
+    const secretLength = parseInt(document.getElementById("secretLength").value);
+    let binarySecret = "";
+    for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
+        const lampCheckbox = document.getElementById(`lamp${lampNumber}`);
+        binarySecret += lampCheckbox.checked ? "1" : "0";
+    }
+    document.getElementById("secretNumbers").value = binarySecret;
+}
+  </script>
+  
+{% endblock %}

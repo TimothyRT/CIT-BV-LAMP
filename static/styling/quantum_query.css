@@ -1,0 +1,233 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+h2 {
+    color: #666;
+}
+
+p {
+    color: #777;
+}
+
+form {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#game_form label{
+    font-size: 20px;
+    margin-bottom: 10px;
+    display: block;
+    color: #333;
+}
+
+#game_form input[type="text"],
+#game_form input[type="number"] {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#game_form select {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+
+#rules {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: justify;
+    line-height: 1.5;
+    display: block;
+  }
+  
+  #rule_title {
+    text-align: center;
+  }
+  
+
+button {
+    padding: 10px 20px;
+    background-color: maroon;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: rgb(51, 9, 9);
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.secret-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.secret-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.explanation {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: help;
+}
+
+.explanation:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #ff0000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    width: 250px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+    margin-left: 10px;
+}
+
+.explanation:hover::before {
+    visibility: visible;
+    opacity: 1;
+}
+
+.qr-code-container {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.logo_title{
+    max-width: 300px; 
+    max-height: 200px; 
+}
+
+.toggle-button {
+    margin: 10px 0; 
+}
+
+.slider {
+    width: 50px; 
+    height: 28px; 
+}
+
+.slider:before {
+    height: 20px; 
+    width: 20px; 
+}
+
+.green-box {
+    width: 30px; 
+    height: 30px; 
+    margin-left: 15px;
+}
+
+
+
+
+.toggle-label {
+display: block;
+margin-bottom: 10px;
+}
+
+.toggle-button {
+display: inline-block;
+position: relative;
+cursor: pointer;
+user-select: none;
+}
+
+.toggle-button input {
+display: none;
+}
+
+.slider {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+background-color: #ccc;
+transition: 0.4s;
+border-radius: 34px;
+margin-left: 10px;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+top: 4px;
+background-color: white;
+transition: 0.4s;
+border-radius: 50%;
+}
+
+input:checked + .slider {
+background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+transform: translateX(26px);
+}
+
+.green-box {
+display: inline-block;
+width: 40px;
+height: 40px;
+background-image: url("/static/images/off.svg");
+background-size: contain;
+background-repeat: no-repeat;
+margin-left: 25px;
+border-radius: 4px;
+opacity: 1;
+}
+
+input:checked + .slider + .green-box {
+background-image: url("/static/images/on.svg");
+}

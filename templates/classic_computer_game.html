@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='styling/clas_comp.css') }}">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+<div class="overlay" id="overlay"></div>
+<div class="modal fade" id="popup" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Congratulations!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>You guessed the correct number: <span id="secretNumberSpan"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2 class="answer">Oracle</h2>
+<div id="chances"></div>
+<form method="post">
+    {% for lamp_number in range(n_length) %}
+    <div>
+        <label class="toggle-label">
+            {% if lamp_number == 0 %}
+                Lamp 1: <span class="electricity-indicator">Electricity</span>
+            {% else %}
+                Lamp {{ lamp_number + 1 }}:
+            {% endif %}
+        </label>
+        <label class="toggle-button">
+            <input type="checkbox" name="lamp{{ lamp_number }}" id="lamp{{ lamp_number }}">
+            <span class="slider"></span>
+            <span class="green-box"></span>
+        </label>
+    </div>
+{% endfor %}
+</form>
+
+<hr>
+<div class="button-group">
+<button type="button" class="btn btn-primary" onClick="startGame()">Start</button>
+<button type="button" class="btn btn-secondary" onClick="returnToMain()">Return</button>
+</div>
+<div id="result"></div>
+
+{% endblock %}
+
+{% block history_box %}
+<style>
+  .history_box, .secret_box {
+    display: block;
+}
+</style>
+
+<div class="history-box">
+  <h2 class="answer">Iteration</h2>
+  <table id="historyTable">
+    <tr>
+      <th>Number</th>
+      <th>User Input</th>
+      <th>Oracle Answer</th>
+    </tr>
+    {% for lamp_number in range(n_length + 1) %}
+      <tr {% if lamp_number == 0 %}class="highlight"{% endif %}>
+        <td>{{ lamp_number + 1 }}</td>
+        <td id="userInput{{ lamp_number }}">
+          {% for _ in range(n_length) %}
+            <span class="gray-square"></span>
+          {% endfor %}
+        </td>
+        <td id="oracleAnswer{{ lamp_number }}">-</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+
+{% endblock %}
+
+{% block secret_box %}
+<h2 class="answer">Answer</h2>
+<div class="lamp-line lamp-pattern-v2">
+    {% for lamp_number in range(n_length) %}
+    <div class="lamp-container">
+      <div class="lamp-label-container">
+        <label class="toggle-label">
+          Lamp {{ lamp_number + 1 }}
+        </label>
+      </div>
+      <label class="toggle-button ">
+        <input type="checkbox" name="answer_lamp{{ lamp_number }}" id="answer_lamp{{ lamp_number }}">
+        <span class="slider"></span>
+         <span class="green-box"></span>
+      </label>
+    </div>
+    <input type="text" id="numpadInput" readonly>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  const secretNumber = "{{ s_number }}" || generateRandomBinaryString({{ n_length }});
+  const lampsCount = {{ n_length }};
+  const translate = { '0': 0, '1': 1 };
+  
+  let chances = {{ n_length }} + 1;
+    function generateRandomBinaryString(length) {
+        let binaryString = '';
+        for (let i = 0; i < length; i++) {
+        binaryString += Math.floor(Math.random() * 2);
+        }
+        return binaryString;
+  }
+  
+  let currentHighlightedRow = 0;
+
+  function updateHistoryBox(lamp_number, input, answer) {
+    const userInputCell = document.getElementById(`userInput${lamp_number}`);
+    const oracleAnswerCell = document.getElementById(`oracleAnswer${lamp_number}`);
+    const lampCheckbox = document.getElementById(`answer_lamp${lamp_number}`);
+    let squares = '';
+    for (let i = 0; i < input.length; i++) {
+      const squareClass = input[i] === '1' ? 'green-square' : 'dark-green-square';
+      squares += `<span class="${squareClass}"></span>`;
+    }
+    userInputCell.innerHTML = squares;
+    oracleAnswerCell.textContent = answer;
+    if (answer === 'Even') {
+      document.getElementById('numpadInput').value += '0';
+    } else {
+      document.getElementById('numpadInput').value += '1';
+      lampCheckbox.checked = true;
+    }
+    
+   
+    const historyTable = document.getElementById('historyTable');
+    const numRows = historyTable.rows.length;
+    currentHighlightedRow = (currentHighlightedRow + 1) % numRows;
+  
+    for (let i = 1; i < numRows; i++) {
+      const row = historyTable.rows[i];
+      if (i === currentHighlightedRow) {
+        row.classList.add('highlight');
+      } else {
+        row.classList.remove('highlight');
+      }
+    }
+  }
+
+    function updateChances() {
+      const chancesElement = document.getElementById('chances');
+      chancesElement.textContent = `Chances: ${chances}`;
+    }
+
+  function klasik_tebak(n) {
+    function toggleLamps(i) {
+      const lamps = document.getElementById(`lamp${i}`);
+      lamps.checked = !lamps.checked;
+  
+      if (i > 0) {
+        const last_lamps = document.getElementById(`lamp${i - 1}`);
+        last_lamps.checked = !last_lamps.checked;
+      }
+  
+      oracleButtonOnClick();
+     
+    }
+  
+    const promises = [];
+    for (let i = 0; i < n; i++) {
+      const promise = new Promise((resolve) => {
+        setTimeout(() => {
+          toggleLamps(i);
+          resolve();
+        }, i * 1000);
+      });
+      promises.push(promise);
+    }
+  
+    Promise.all(promises).then(() => {
+      setTimeout(() => {
+        const jawaban_classic = document.getElementById('numpadInput').value;
+    
+        if (jawaban_classic === secretNumber.toString()) {
+          document.querySelector('#secretNumberSpan').textContent = secretNumber.toString();
+
+          // Show the popup
+          $('#popup').modal('show');
+          const chancesWon = {{n_length}} + 1 - chances;
+          const historyTable = document.getElementById('historyTable');
+          const row = historyTable.rows[chancesWon];
+          row.classList.remove('highlight');
+          row.classList.add('win');
+          
+          
+        } else {
+          alert("Sorry, your guess is incorrect. Try again.");
+        }
+      }, 1000); 
+    });
+    
+    
+  }
+  
+    function startGame(){
+      klasik_tebak({{ n_length }});
+    }
+      
+    function oracleButtonOnClick() {
+    const lampsOrc = [];
+    for (let i = 0; i < lampsCount; i++) {
+      lampsOrc.push(document.getElementById(`lamp${i}`).checked ? 1 : 0);
+    }
+  
+    let yangNyala = 0;
+    for (let i = 0; i < secretNumber.length; i++) {
+      yangNyala += translate[secretNumber[i]] & lampsOrc[i];
+    }
+  
+    const isEven = yangNyala % 2 === 0;
+  
+    updateHistoryBox(lampsCount + 1 - chances, lampsOrc.join(''), isEven ? 'Even' : 'Odd'); 
+    chances--; 
+    updateChances();
+  }
+
+    document.addEventListener('DOMContentLoaded', document.getElementById('numpadInput').value = '')
+
+
+    function returnToMain() {
+      window.location.href = "/not_play_again"
+    }
+
+
+  </script>
+{% endblock %}
