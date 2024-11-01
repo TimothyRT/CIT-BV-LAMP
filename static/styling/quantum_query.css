@@ -166,6 +166,42 @@ button:hover {
     margin-left: 15px;
 }
 
+.description-rules-container {
+    max-width: 800px;
+    margin: 0 auto; 
+}
+
+#bv_description, #rules {
+    padding: 20px; 
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    border: 1px solid #ddd; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+    line-height: 1.6; 
+}
+
+#bv_description h2, #rules h2 {
+    font-size: 1.5rem;
+    font-weight: bold; 
+    margin-bottom: 15px; 
+    color: #2c3e50; 
+}
+
+#bv_description p, #rules ul li {
+    font-size: 1.1rem; 
+    margin-bottom: 15px; 
+    color: #34495e; 
+}
+
+#rules ul {
+    padding-left: 20px; 
+}
+
+#bv_description p:last-of-type, #rules ul li:last-of-type {
+    margin-bottom: 0; 
+}
+
 
 
 
