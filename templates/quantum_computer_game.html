@@ -19,6 +19,27 @@
       </div>
       <div class="modal-body">
         <p>You guessed the correct number: <span id="secretNumberSpan"></span></p>
+        <p>You used 1 chance</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Modal for Plot -->
+<div class="modal fade" id="plotModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 70%; width: auto;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Quantum Plot</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <img id="quantumPlot" src="{{ url_for('static', filename='images/' + plot_filename) }}" alt="Quantum Plot" style="width: 100%; height: auto;"/>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -33,7 +54,7 @@
 <div>
   {% for lamp_number in range(n_length) %}
     <div>
-      <label class="toggle-label" >
+      <label class="toggle-label">
         {% if lamp_number == 0 %}
           Lamp 1: <span class="electricity-indicator">Electricity</span>
         {% else %}
@@ -49,12 +70,10 @@
   {% endfor %}
 </div>
 
-
-
-
 <div class="button-group">
-<button type="button" class="btn btn-primary" onClick="startGame()">Start</button>
-<button type="button" class="btn btn-secondary" onClick="returnToMain()">Return</button>
+  <button type="button" class="btn btn-primary" onClick="startGame()">Start</button>
+  <button type="button" class="btn btn-secondary" onClick="returnToMain()">Return</button>
+  <button type="button" class="btn btn-secondary" id="showPlotButton" onClick="showPlot()" style="background-color: #87CEEB; color: #fff; border: none; display: none;">Show Plot</button>
 </div>
 
 <div id="result"></div>
@@ -73,7 +92,7 @@
     <tr>
       <th>Number</th>
       <th>User Input</th>
-      <th >Oracle Answer</th>
+      <th>Oracle Answer</th>
     </tr>
     {% for lamp_number in range(n_length + 1) %}
       <tr {% if lamp_number == 0 %}class="highlight"{% endif %}>
@@ -112,17 +131,22 @@
 </div>
 {% endblock %}
 
-{% block script%}
+{% block script %}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
   var secret_numba = "{{ secret_numbers }}"; 
-  var n_length = {{n_length}};
+  var n_length = {{ n_length }};
   const lampsCount = {{ n_length }};
   const translate = { '0': 0, '1': 1 };
   let chances = {{ n_length }} + 1;
-  
+
+  function showPlot() {
+    // Show the plot modal
+    $('#plotModal').modal('show');
+  }
+
   function startGame() {
     for (let i = 0; i < n_length; i++) {
         const lamps = document.getElementById(`lamp${i}`);
@@ -137,13 +161,13 @@
         }
     }
 
-  
     oracleButtonOnClick();
     document.getElementById('numpadInput').value = secret_numba ;
     document.querySelector('#secretNumberSpan').textContent = secret_numba;
 
     // Show the popup
     $('#popup').modal('show');
+    document.getElementById('showPlotButton').style.display = 'block';
   }
 
   function returnToMain() {
@@ -167,11 +191,9 @@
     const numRows = historyTable.rows.length;
     currentHighlightedRow = (currentHighlightedRow + 1) % numRows;
   
-   
     const row = historyTable.rows[1];
     row.classList.remove('highlight');
     row.classList.add('win');
-    
   }
 
   function updateChances() {
@@ -195,7 +217,6 @@
     updateHistoryBox(0, lampsOrc.join(''), isEven ? 'Even' : 'Odd'); 
   }
 
-
   document.addEventListener('DOMContentLoaded', function() {
     const greenBoxes = document.querySelectorAll('.green-box');
 
@@ -218,8 +239,7 @@
     });
   });
 
-  
-   document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('numpadInput').value = ''; 
   });
 </script>
