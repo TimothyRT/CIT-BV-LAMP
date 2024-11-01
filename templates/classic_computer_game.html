@@ -19,6 +19,7 @@
       </div>
       <div class="modal-body">
         <p>You guessed the correct number: <span id="secretNumberSpan"></span></p>
+        <p>You used <span id="chancesUsedSpan"></span> chances</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -45,7 +46,7 @@
             <span class="green-box"></span>
         </label>
     </div>
-{% endfor %}
+    {% endfor %}
 </form>
 
 <hr>
@@ -61,7 +62,7 @@
 <style>
   .history_box, .secret_box {
     display: block;
-}
+  }
 </style>
 
 <div class="history-box">
@@ -199,11 +200,15 @@
         if (jawaban_classic === secretNumber.toString()) {
           document.querySelector('#secretNumberSpan').textContent = secretNumber.toString();
 
+          // Display the chances used
+          const chancesUsed = {{ n_length }} + 1 - chances;
+          document.querySelector('#chancesUsedSpan').textContent = chancesUsed;
+
           // Show the popup
           $('#popup').modal('show');
-          const chancesWon = {{n_length}} + 1 - chances;
+          
           const historyTable = document.getElementById('historyTable');
-          const row = historyTable.rows[chancesWon];
+          const row = historyTable.rows[chancesUsed];
           row.classList.remove('highlight');
           row.classList.add('win');
           
