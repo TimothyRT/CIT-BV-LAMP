@@ -50,7 +50,7 @@
                 margin-bottom: 30px;
             }
 
-            .history_box, .secret_box  {
+            .history_box, .secret_box {
                 padding: 16px;
                 background-color: white;
                 border-radius: 10px;
@@ -68,10 +68,59 @@
                 display: block;
             }
             
-            .rules-wrap{
-                display: flex;
-                flex-direction: column;
-            }
+
+         #plotContainer {
+  display: none; /* Hidden initially, shown when needed */
+  margin-top: 20px;
+  margin-left: 20px;
+  border: 2px solid #cccccc;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  
+  /* Center content */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#plotContainer:hover {
+  border-color: #007bff;
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
+}
+
+#plotContainer h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+#quantumPlot {
+  width: 90%; 
+  height: auto;
+  max-width: 600px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  #plotContainer {
+    padding: 15px;
+  }
+
+  #plotContainer h2 {
+    font-size: 1.25rem;
+  }
+
+  #quantumPlot {
+    width: 100%;
+  }
+}
+
+                
         </style>
     </head>
     <body style="max-height: 100vh;">
@@ -101,6 +150,12 @@
             <div class="secret_box">
                 <!-- Help meh idk what im doing :v -->
                 {% block secret_box %}
+                {% endblock %}
+            </div>
+
+            <div class="plot_quantum">
+                <!-- Help meh idk what im doing :v -->
+                {% block plot_quantum %}
                 {% endblock %}
             </div>
         </div>
