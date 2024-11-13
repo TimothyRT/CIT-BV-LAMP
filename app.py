@@ -123,12 +123,11 @@ def quantum_computer_game():
     if s_number is None or s_number == "":
         s_number = ''.join(random.choice('01') for _ in range(n_length))
     
-    # Generate the quantum result
     detected_secret, tries, counts = quantums(len(s_number), q_circuit_create(s_number))
     
-    # Create a unique filename for the plot image
-    plot_filename = f"quantum_plot_{hash(s_number)}.png"  
-    plot_path = f'static/images/{plot_filename}'  # Save in the static/images folder
+    
+    plot_filename = f"quantum_plot.png"  
+    plot_path = f'static/images/{plot_filename}' 
     
     # Generate and save the plot image
     save_quantum_plot(s_number, detected_secret, counts, plot_path)
@@ -174,8 +173,13 @@ def save_quantum_plot(secret_number, detected_secret, counts, plot_path):
     ax.set_ylabel("Counts")
     ax.legend(['Relevant States', 'Detected Secret'])
 
+   
+    ax.set_xticks(range(len(filtered_states))) 
+    ax.set_xticklabels(filtered_states.keys(), rotation=45, ha='right')  
+
+    plt.tight_layout()  
     plt.savefig(plot_path)  
-    plt.close(fig)  
+    plt.close(fig)
 
     
 
