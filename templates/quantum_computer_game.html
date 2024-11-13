@@ -28,27 +28,6 @@
   </div>
 </div>
 
-<!-- New Modal for Plot -->
-<div class="modal fade" id="plotModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 70%; width: auto;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Quantum Plot</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <img id="quantumPlot" src="{{ url_for('static', filename='images/' + plot_filename) }}" alt="Quantum Plot" style="width: 100%; height: auto;"/>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <h1 class="answer">Oracle</h1>
 <div id="chances"></div>
 <div>
@@ -73,10 +52,10 @@
 <div class="button-group">
   <button type="button" class="btn btn-primary" onClick="startGame()">Start</button>
   <button type="button" class="btn btn-secondary" onClick="returnToMain()">Return</button>
-  <button type="button" class="btn btn-secondary" id="showPlotButton" onClick="showPlot()" style="background-color: #87CEEB; color: #fff; border: none; display: none;">Show Plot</button>
 </div>
 
 <div id="result"></div>
+
 {% endblock %}
 
 {% block history_box %}
@@ -129,7 +108,19 @@
     <input type="text" id="numpadInput" readonly>
     {% endfor %}
 </div>
+
+
+
 {% endblock %}
+
+{% block plot_quantum %}
+<div id="plotContainer" style="display: none; margin-top: 20px; border: 1px solid #ccc; padding: 20px; text-align: center; background-color: #f9f9f9;">
+  <h2>Quantum Circuit Plot</h2>
+  <img id="quantumPlot" src="{{ url_for('static', filename='images/' + plot_filename) }}" alt="Quantum Plot" style="display: block; margin: 0 auto; width: 80%; height: auto;"/>
+
+</div>
+{% endblock %}
+
 
 {% block script %}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -141,11 +132,6 @@
   const lampsCount = {{ n_length }};
   const translate = { '0': 0, '1': 1 };
   let chances = {{ n_length }} + 1;
-
-  function showPlot() {
-    // Show the plot modal
-    $('#plotModal').modal('show');
-  }
 
   function startGame() {
     for (let i = 0; i < n_length; i++) {
@@ -162,17 +148,20 @@
     }
 
     oracleButtonOnClick();
-    document.getElementById('numpadInput').value = secret_numba ;
+    document.getElementById('numpadInput').value = secret_numba;
     document.querySelector('#secretNumberSpan').textContent = secret_numba;
 
+    // Display the plot container
+    document.getElementById('plotContainer').style.display = 'block';
+    
     // Show the popup
     $('#popup').modal('show');
-    document.getElementById('showPlotButton').style.display = 'block';
   }
 
   function returnToMain() {
     window.location.href = "/not_play_again";
   }
+
   let currentHighlightedRow = 0;
 
   function updateHistoryBox(lamp_number, input, answer) {
