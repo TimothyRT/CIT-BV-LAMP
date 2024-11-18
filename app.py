@@ -188,14 +188,16 @@ def save_quantum_plot(secret_number, detected_secret, counts, plot_path):
 def not_play_again():
     return render_template("index.html")
 
-@app.route('/enchancement')
-def enchancement():
-    return render_template("image_video.html")
+@app.route('/delete_plot', methods=['POST'])
+def delete_plot():
+    data = request.get_json()
+    plot_path = data.get('plot_path')
 
+    if plot_path and os.path.exists(plot_path):
+        os.remove(plot_path) 
+        return {'status': 'success'}, 200
 
-@app.route('/user_mob_form', methods=["GET"])
-def mobile_input():
-    return render_template('user_mob.html')
+    return {'status': 'file not found'}, 404
 
 
 
