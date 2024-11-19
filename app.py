@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,  redirect, url_for, session
 from flask_session import Session
 import hashlib
+import os
 from qiskit.visualization import plot_histogram
 import random
 import matplotlib
@@ -125,11 +126,13 @@ def quantum_computer_game():
     
     detected_secret, tries, counts = quantums(len(s_number), q_circuit_create(s_number))
     
-    
     plot_filename = f"quantum_plot.png"  
-    plot_path = f'static/images/{plot_filename}' 
+    plot_path = f'static/images/{plot_filename}'
     
-    # Generate and save the plot image
+    
+    if os.path.exists(plot_path):
+        os.remove(plot_path)
+    
     save_quantum_plot(s_number, detected_secret, counts, plot_path)
     
     secret_number = None 
@@ -139,7 +142,8 @@ def quantum_computer_game():
                            secret_numbers=s_number, 
                            tries=tries, 
                            n_length=n_length, 
-                           plot_filename=plot_filename)
+                           plot_filename=plot_filename,
+                           )
 
 def save_quantum_plot(secret_number, detected_secret, counts, plot_path):
     n_length = len(secret_number)
@@ -198,7 +202,6 @@ def delete_plot():
         return {'status': 'success'}, 200
 
     return {'status': 'file not found'}, 404
-
 
 
 if __name__ == '__main__':
