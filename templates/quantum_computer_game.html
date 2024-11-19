@@ -159,23 +159,9 @@
   }
 
   function returnToMain() {
-    const plotPath = "{{ plot_path }}"; 
-    fetch("/delete_plot", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ plot_path: plotPath })
-    })
-      .then(response => {
-        if (response.ok) {
-          window.location.href = "/not_play_again"; 
-        } else {
-          console.error("Failed to delete the plot file");
-        }
-      })
-      .catch(error => console.error("Error:", error));
+    window.location.href = "/not_play_again"
   }
+  
   
 
   let currentHighlightedRow = 0;
