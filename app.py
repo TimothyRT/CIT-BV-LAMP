@@ -41,6 +41,7 @@ def apply_oracle(secret):
 
     return oracle_circuit
 
+
 def q_circuit_create(secret):
     length = len(secret)
     circuit = QuantumCircuit(length + 1, length)
@@ -51,6 +52,7 @@ def q_circuit_create(secret):
     circuit.measure(range(length), range(length))
 
     return circuit
+
 
 def quantums(n, circuit):
     simulator = AerSimulator()
@@ -73,9 +75,11 @@ def index():
     print(ip)
     return render_template('index.html')
 
+
 @app.route('/homepage')
 def process_user_transformation_choice():
     return render_template("quantum_query.html")
+
 
 @app.route('/process_game_type', methods=["POST", "GET"])
 def process_game_type():
@@ -91,6 +95,7 @@ def process_game_type():
 
     return redirect(url_for(game_type))
 
+
 @app.route('/player_game')
 def player_game():
     global secret_number
@@ -102,6 +107,7 @@ def player_game():
     secret_length = None
     return render_template("player_game.html", n_length=n_length, s_number=s_number)
 
+
 @app.route("/classic_computer_game")
 def classic_computer_game():
     global secret_number
@@ -111,8 +117,6 @@ def classic_computer_game():
     secret_number = None 
     secret_length = None
     return render_template("classic_computer_game.html", n_length=n_length, s_number=s_number)
-
-
 
 
 @app.route("/quantum_computer_game")
@@ -143,6 +147,7 @@ def quantum_computer_game():
                            n_length=n_length, 
                            plot_filename=plot_filename,
                            )
+
 
 def save_quantum_plot(secret_number, detected_secret, counts, plot_path):
     n_length = len(secret_number)
@@ -184,8 +189,6 @@ def save_quantum_plot(secret_number, detected_secret, counts, plot_path):
     plt.savefig(plot_path)  
     plt.close(fig)
 
-    
-
 
 @app.route("/not_play_again")
 def not_play_again():
@@ -193,4 +196,4 @@ def not_play_again():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
