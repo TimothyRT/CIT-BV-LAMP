@@ -21,20 +21,12 @@
 }
 
 body {
-<<<<<<< HEAD
   font-family: 'JetBrains Mono', sans-serif;
-=======
-  font-family: 'JetBrains Mono';
->>>>>>> 459200d85d222d552984c24efdea395b1cafded1
   font-size: 16px;
 }
 
 select, span {
-<<<<<<< HEAD
   font-family: 'JetBrains Mono', sans-serif;
-=======
-  font-family: 'JetBrains Mono';
->>>>>>> 459200d85d222d552984c24efdea395b1cafded1
 }
 
 .page {
