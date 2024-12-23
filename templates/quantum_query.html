@@ -1,92 +1,110 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Bernstein-Vazirani</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styling/styles.css') }}"
+    >
+  </head>
+  <body>
+    <div class="page">
+      <img class="header" src="{{ url_for('static', filename='images/header.svg') }}">
 
-{% block stylesheet %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styling/quantum_query.css') }}">
-{% endblock %}
+      <main class="content">
+        <section class="container container--desc">
+          <h2 class="heading">About the Bernstein-Vazirani Algorithm</h2>
+          <p>
+            The <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93Vazirani_algorithm" target="_blank" rel="noopener noreferrer"><strong>Bernstein-Vazirani (BV)</strong></a> algorithm is a quantum approach designed by Ethan Bernstein and Umesh Vazirani to learn a string encoded in a function. It efficiently identifies a secret bit pattern by making only one call to a quantum oracle, using quantum superposition to guess the secret number with a guess.
+          </p>
+          <p>
+            In this game, the player's objective is to guess a hidden binary number that's represented by a series of lamps. Each lamp can be either "on" (1) or "off" (0), simulating binary digits in the secret number. Here, players may compare how a human, a classical computer, and a quantum computer (which uses the BV algorithm), attempts to deduce the secret binary number.
+          </p>
+          <p>
+            The <a href="https://en.wikipedia.org/wiki/Oracle_(computer_science)" target="_blank" rel="noopener noreferrer"><strong>oracle</strong></a> in this game acts as a helpful tool, similar to its role in the BV algorithm. The <a href="https://en.wikipedia.org/wiki/Oracle_(computer_science)" target="_blank" rel="noopener noreferrer"><strong>oracle</strong></a> reveals if the number of "on" lamps is odd or even, providing clues about the binary state of each lamp. The player uses these responses to make educated guesses about the secret number.
+          </p>
+        </section>
 
-.main_section {
-  background-color: transparent;
-}
+        <section class="container container--rules">
+          <h2 class="heading">Rules of the Game</h2>
+            <ul class="rules">
+              <li>Each lamp represents a binary digit in the hidden number.</li>
+              <li>Functional lights are "1" (on), while broken lights are "0" (off).</li>
+              <li>A player can "ask the oracle" to determine if the number of "on" lamps is odd or even.</li>
+              <li>Using the oracle's responses, the player may then deduce the binary pattern of the secret number.</li>
+              <li>The game ends once the player has correctly guessed the secret number or exhausted all attempts.</li>
+            </ul>
+        </section>
 
-{% block rules %}
-<div class="description-rules-container">
-    <div id="bv_description">
-        <h2>Bernstein-Vazirani Algorithm</h2>
-        <p>The <a href="https://en.wikipedia.org/wiki/Bernstein%E2%80%93Vazirani_algorithm" target="_blank" rel="noopener noreferrer"><strong>Bernstein-Vazirani (BV)</strong></a> algorithm is a quantum approach designed by Ethan Bernstein and Umesh Vazirani to to learn a string encoded in a function. It efficiently identifies a secret bit pattern by making only one call to a quantum oracle, using quantum superposition to guess the secret number with a guess.</p>
-        <p>In this game, the player’s objective is to guess a hidden binary number that’s represented by a series of lamps. Each lamp can be either "on" (1) or "off" (0), simulating binary digits in the secret number. We could compare how a human, classical computer, and the quantum computer (BV Algorithm), attempts to deduce the secret binary number.</p>
-        <p>The <a href="https://en.wikipedia.org/wiki/Oracle_(computer_science)" target="_blank" rel="noopener noreferrer"><strong>oracle</strong></a>  in this game acts as a helpful tool, similar to its role in the BV algorithm. The <a href="https://en.wikipedia.org/wiki/Oracle_(computer_science)" target="_blank" rel="noopener noreferrer"><strong>oracle</strong></a>  reveals if the count of "on" lamps is odd or even, providing clues about the binary state of each lamp. The player uses these responses to make educated guesses about the secret number.</p>
+        <section class="container container--options">
+          <form class="game-options" action="/process_game_type" method="post" id="game_form" onsubmit="return validateForm()">
+            <div class="game-option">
+              <label for="gameType">Select solver:</label>
+              <select id="gameType" name="gameType">
+                <option value="player_game">Player</option>
+                <option value="classic_computer_game">Classical Computer</option>
+                <option value="quantum_computer_game">Quantum Computer</option>
+              </select>
+            </div>
+
+            <div class="game-option">
+              <label for="secretLength">Secret number length:</label>
+              <select id="secretLength" name="secretLength">
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+            
+            <div class="game-option">
+              <label for="inputSecretNumber">Secret number:</label>
+              <select id="inputSecretNumber" name="inputSecretNumber" onchange="toggleInputTypeA()">
+                <option value="random">Random</option>
+                <option value="not_random">Predetermined</option>
+              </select>
+            </div>
+
+            <div id="lampContainer" style="display: none;"></div>
+            
+            <input type="hidden" id="secretNumbers" name="secretNumbers">
+            
+            <button class="button" type="submit" onclick="readBinarySecret();">
+              <span class="button__label">Start Game</span>
+            </button>
+          </form>
+        </section>
+      </main>
+      
+      <footer class="footer">
+        <img class="cit-logo" src="{{ url_for('static', filename='images/CIT Logo.png') }}">
+      </footer>
     </div>
 
-    <div id="rules">
-        <h2>Rules of the Game</h2>
-        <ul>
-            <li>Each lamp represents a binary digit in the hidden number.</li>
-            <li>Functional lights are "1" (on), while broken lights are "0" (off).</li>
-            <li>Players can "ask the oracle" to determine if the number of "on" lamps is odd or even.</li>
-            <li>Using the oracle's responses, players deduce the binary pattern of the secret number.</li>
-            <li>The game ends when the player correctly guesses the secret number or exhausts all attempts.</li>
-        </ul>
-    </div>
-</div>
-{% endblock %}
-
-
-
-{% block content %}
-<img class="logo_title" src=".\static\images\logo.svg" alt="Tebak Lampu">
-<form action="/process_game_type" method="post" id="game_form" onsubmit="return validateForm()">
-    <label for="gameType">Select Solver:</label>
-    <select id="gameType" name="gameType">
-      <option value="player_game">Player</option>
-      <option value="classic_computer_game">Classical Computer</option>
-      <option value="quantum_computer_game">Quantum Computer</option>
-    </select>
-
-    <br><br>
-    <label for="secretLength">Secret number length:</label>
-    <select id="secretLength" name="secretLength">
-        <option value="4">4</option>
-        <option value="6">6</option>
-        <option value="8">8</option>
-        <option value="10">10</option>
-    </select>
-    <br><br>
-    
-    <div id="directInputContainer" class="input-container">
-      <label for="inputSecretNumber">Secret Number:</label>
-      <select id="inputSecretNumber" name="inputSecretNumber" onchange="toggleInputTypeA()">
-        <option value="random">Random</option>
-        <option value="not_random">Predetermined</option>
-      </select>
-    </div>
-
-    <input type="hidden" id="secretNumbers" name="secretNumbers">
-    <div id="lampContainer" style="display: none;"></div>
-
-    <button type="submit" onclick="readBinarySecret();">Start Game</button>
-</form>
-{% endblock %}
-
-{% block script %}
-<script>
-    function toggleInputTypeA() {
-      const inputChoice = document.getElementById('inputSecretNumber').value;
-      const lampContainer = document.getElementById("lampContainer");
-      if (inputChoice === 'random') {
-        lampContainer.style.display = 'none';
-        document.getElementById("secretNumbers").value = ""
-      } else if (inputChoice === 'not_random') {
-        generateLamps();
-        lampContainer.style.display = 'block';
+    {% block script %}
+    <script>
+      function toggleInputTypeA() {
+        const inputChoice = document.getElementById('inputSecretNumber').value;
+        const lampContainer = document.getElementById("lampContainer");
+        if (inputChoice === 'random') {
+          lampContainer.style.display = 'none';
+          document.getElementById("secretNumbers").value = ""
+        } else if (inputChoice === 'not_random') {
+          generateLamps();
+          lampContainer.style.display = 'block';
+        }
       }
-    }
 
-    function generateLamps() {
-      const lampContainer = document.getElementById("lampContainer");
-      const secretLength = parseInt(document.getElementById("secretLength").value);
-      lampContainer.innerHTML = ""; 
+      function generateLamps() {
+        const lampContainer = document.getElementById("lampContainer");
+        const secretLength = parseInt(document.getElementById("secretLength").value);
+        lampContainer.innerHTML = ""; 
 
-      for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
+        for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
           const label = document.createElement("label");
           label.classList.add("toggle-label");
           label.textContent = `Lamp ${lampNumber + 1}:`;
@@ -112,17 +130,19 @@
           lampContainer.appendChild(label);
           lampContainer.appendChild(toggleButton);
           lampContainer.appendChild(document.createElement("br"));
+        }
       }
-    }
 
-    function readBinarySecret() {
-      const secretLength = parseInt(document.getElementById("secretLength").value);
-      let binarySecret = "";
-      for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
+      function readBinarySecret() {
+        const secretLength = parseInt(document.getElementById("secretLength").value);
+        let binarySecret = "";
+        for (let lampNumber = 0; lampNumber < secretLength; lampNumber++) {
           const lampCheckbox = document.getElementById(`lamp${lampNumber}`);
           binarySecret += lampCheckbox.checked ? "1" : "0";
+        }
+        document.getElementById("secretNumbers").value = binarySecret;
       }
-      document.getElementById("secretNumbers").value = binarySecret;
-    }
-</script>
-{% endblock %}
+    </script>
+    {% endblock %}
+  </body>
+</html>

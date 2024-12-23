@@ -1,0 +1,134 @@
+
+
+
+#rules {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: justify;
+    line-height: 1.5;
+    display: block;
+  }
+  
+  #rule_title {
+    text-align: center;
+  }
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.secret-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    box-sizing: border-box;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.secret-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.explanation {
+    color: red;
+    font-weight: bold;
+    margin-left: 5px;
+    cursor: help;
+}
+
+.explanation:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    background-color: #ff0000;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    width: 250px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+    margin-left: 10px;
+}
+
+.explanation:hover::before {
+    visibility: visible;
+    opacity: 1;
+}
+
+.logo_title{
+    max-width: 300px; 
+    max-height: 200px; 
+}
+
+.toggle-button {
+    margin: 10px 0; 
+}
+
+.slider {
+    width: 50px; 
+    height: 28px; 
+}
+
+.slider:before {
+    height: 20px; 
+    width: 20px; 
+}
+
+.green-box {
+    width: 30px; 
+    height: 30px; 
+    margin-left: 15px;
+}
+
+.description-rules-container {
+    max-width: 800px;
+    margin: 0 auto; 
+}
+
+#bv_description, #rules {
+    padding: 20px; 
+    background-color: #f9f9f9; 
+    border-radius: 10px;
+    border: 1px solid #ddd; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin-bottom: 20px; 
+    line-height: 1.6; 
+}
+
+#bv_description h2, #rules h2 {
+    font-size: 1.5rem;
+    font-weight: bold; 
+    margin-bottom: 15px; 
+    color: #2c3e50; 
+}
+
+#bv_description p, #rules ul li {
+    font-size: 1.1rem; 
+    margin-bottom: 15px; 
+    color: #34495e; 
+}
+
+#rules ul {
+    padding-left: 20px; 
+}
+
+#bv_description p:last-of-type, #rules ul li:last-of-type {
+    margin-bottom: 0; 
+}

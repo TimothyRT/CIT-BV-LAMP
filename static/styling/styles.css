@@ -1,0 +1,561 @@
+/* -------------------------- */
+/* Importing Google Fonts */
+
+@import "https://fonts.googleapis.com/css2?family=JetBrains Mono:wght@100;200;300;400;500;600;700;900&display=swap";
+
+/* Reset CSS */
+@import url("reset.css");
+
+/* -------------------------- */
+/* Generic */
+
+:root {
+  --primary-400: #4878C9;
+  --primary-500: #1848A5;
+
+  --gray-100: #F7F8F8;
+  --gray-200: #EFF1F2;
+  --gray-300: #D5D7DA;
+  --gray-400: #B0B2B5;
+  --gray-500: #808285;
+}
+
+body {
+  font-family: 'JetBrains Mono';
+  font-size: 16px;
+}
+
+select, span {
+  font-family: 'JetBrains Mono';
+}
+
+.page {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 64px;
+  min-height: 100vh;
+}
+
+.content {
+  margin: 0 64px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.content--half {
+  margin: 0;
+}
+
+.title {
+  color: var(--primary-500);
+  font-size: 84px;
+  font-weight: bold;
+  line-height: 84px;
+}
+
+.formatter-button-subtitle {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 32px;
+}
+
+.button {
+  background-color: var(--primary-500);
+  border: 2px solid var(--primary-500);
+  border-radius: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+  padding: 0 12px;
+  min-width: 231px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button--small {
+  min-width: 105px;
+}
+
+.button--secondary {
+  background-color: transparent;
+  border: 2px solid var(--gray-500)
+}
+
+.button:hover {
+  background-color: var(--primary-400);
+  border: 2px solid var(--primary-400);
+}
+
+.button--secondary:hover {
+  background-color: transparent;
+  border: 2px solid var(--gray-400);
+}
+
+.button__label {
+  color: white;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 36px;
+}
+
+.button--secondary__label {
+  color: var(--gray-500);
+}
+
+.button--secondary__label:hover {
+  color: var(--gray-400);
+}
+
+.subtitle {
+  color: var(--primary-400);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.footer {
+  background-image: url('/static/images/footer.svg');
+  min-height: 128px;
+
+  display: block;
+  position: relative;
+}
+
+.cit-logo {
+  width: 128px;
+
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+}
+
+.heading {
+  color: var(--primary-500);
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 26px;
+}
+
+.container {
+  border: none;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  padding: 40px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+
+  grid-area: half;
+}
+
+/* -------------------------- */
+/* For quantum_query */
+
+.rules {
+  line-height: 20px;
+  list-style-image: url('/static/images/bullet.svg');
+}
+
+.game-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.game-option {
+  text-align: center;
+  width: 160px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-option label {
+  color: var(--primary-500);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.game-option select {
+  background-color: var(--gray-200);
+  border: 1px solid var(--gray-500);
+  border-radius: 4px;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 8px;
+  width: 100%;
+}
+
+.toggle-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.toggle-button {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-button input {
+  display: none;
+}
+
+.slider {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+  margin-left: 10px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  top: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.green-box {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url("/static/images/off.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 25px;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+input:checked + .slider + .green-box {
+background-image: url("/static/images/on.svg");
+}
+
+/* -------------------------- */
+/* For game (all modes) */
+
+.half-splitter {
+  margin: 0 24px;
+
+  display: grid;
+  gap: 24px;
+  grid-template-columns: calc(30% - 24px) 70%;
+  grid-template-rows: auto;
+  grid-template-areas: 
+    "half half";
+}
+
+/* Modal styles */
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 900;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+}
+
+.modal-title {
+  color: var(--primary-500);
+  font-size: 20px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header .close {
+  display: none;
+}
+  
+.modal-message {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* IDK */
+
+.remaining-guesses {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.electricity-indicator {
+  margin-left: 20px;
+  font-size: 14px;
+  color: var(--gray-500);
+  font-weight: bold;
+}
+
+.lamp-pattern-v2 .toggle-label {
+  margin-left: 5px;
+}
+
+.lamp-pattern-v2 .lamp-container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  margin-right: 20px; 
+  margin-left: -10px;
+}
+
+.lamp-pattern-v2 .lamp-container:last-child {
+  margin-right: 0; 
+}
+
+.lamp-pattern-v2 .lamp-label-container {
+  margin-bottom: 5px; 
+}
+
+.lamp-pattern-v2 input:checked + .slider + .green-box {
+  background-image: url("/static/images/on.svg");
+}
+
+.lamp-pattern-v2 .green-box {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-image: url("/static/images/off.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+.lamp-pattern-v2 .toggle-button {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+}
+
+.lamp-line {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+}
+
+/* -------------------------- */
+/* For game (player mode) */
+
+#secretNumber {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  color: #e74c3c; /* Adjust the color as needed */
+}
+
+@keyframes pulse {
+  0%, 100% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.1);
+  }
+}
+
+#secretNumber {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  color: #ecd5d2; /* Adjust the color as needed */
+  animation: pulse 1s infinite; /* Apply the animation */
+}
+
+/* -------------------------- */
+/* For game (quantum and classical computer modes) */
+
+#secretNumberSpan {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  color: #e74c3c; /* Adjust the color as needed */
+}
+
+#secretNumberSpan {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+  color: #e74c3c; /* Adjust the color as needed */
+  animation: pulse 1s infinite; /* Apply the animation */
+}
+
+#chances {
+  display: none;
+}
+
+#numpadInput{
+  display: none;
+}
+
+/* -------------------------- */
+/* For game -> history box */
+
+.button-group {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 8px;
+}
+
+@media only screen and (max-width: 1100px) {
+  .button-group {
+    flex-direction: column;
+  }
+}
+
+.history-box table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-box th,
+.history-box td {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid var(--gray-300);
+}
+
+.history-box .gray-square {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/images/oracle_off.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 5px;
+}
+
+.history-box .green-square {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/images/oracle_on.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 5px;
+}
+
+.history-box .dark-green-square {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-image: url("/static/images/oracle_off.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-left: 5px;
+}
+
+.history-box .green-square:last-child,
+.history-box .dark-green-square:last-child {
+  margin-right: 5px;
+}
+
+.highlight {
+  background-color: yellow;
+}
+
+.win {
+  background-color: rgb(135, 201, 135);
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* -------------------------- */
+/* For game -> answer box */
+
+/* -------------------------- */
+/* For game -> secret box */
+
+#plotContainer {
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  display: none;  /* hidden initially, shown when needed */
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+#plotContainer:hover {
+  border: 2px solid var(--primary-400);
+  box-shadow: 0 0 10px var(--primary-400);
+}
+
+#quantumPlot {
+  width: 90%;
+  height: auto;
+  margin: 16px auto 0 auto;
+  max-width: 600px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+  #quantumPlot {
+    width: 100%;
+  }
+}

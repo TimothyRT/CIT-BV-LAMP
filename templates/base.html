@@ -1,168 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
-        <!-- In case we need a specific stylesheet for a specific page -->
-        {% block stylesheet %}
-        {% endblock %}
-        <title>IBDA Open House Project</title>
-        <style>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game | Bernstein-Vazirani</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styling/styles.css') }}" rel="stylesheet">
+    {% block stylesheet %} {% endblock %}
+  </head>
 
-            body {
-                background-color: #ffbf00;
-            }
-            .header {
-                background-color: maroon;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 120px;
-                margin-bottom: 50px;
-            }
-            
-            .header-image {
-                background-image: url("/static/images/CIT.png");
-                background-size: contain;
-                background-position: center;
-                background-repeat: no-repeat;
-                width: 20%;
-                height: 80%;
-            }
-            section {
-                display: flex;
-                justify-content: center;
-                flex-direction: row;
-                align-items: center;
-                
-            }
-            .main_section {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px;
-                border-radius: 4px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-                background-color: #f7f7f7;
-                border: 1px solid #ccc;
-                margin-bottom: 30px;
-            }
-
-            .history_box, .secret_box {
-                padding: 16px;
-                background-color: white;
-                border-radius: 10px;
-                margin-left: 20px; 
-                display: none;
-                margin-bottom: 20px;
-            }
-
-            .wrapper{
-                display: flex;
-                flex-direction: column;
-            }
-
-            .rules{
-                display: block;
-            }
-            
-
-         #plotContainer {
-  display: none; /* Hidden initially, shown when needed */
-  margin-top: 20px;
-  margin-left: 20px;
-  border: 2px solid #cccccc;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  
-  /* Center content */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-#plotContainer:hover {
-  border-color: #007bff;
-  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.2);
-}
-
-#plotContainer h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 10px;
-}
-
-#quantumPlot {
-  width: 90%; 
-  height: auto;
-  max-width: 600px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-}
-
-@media (max-width: 768px) {
-  #plotContainer {
-    padding: 15px;
-  }
-
-  #plotContainer h2 {
-    font-size: 1.25rem;
-  }
-
-  #quantumPlot {
-    width: 100%;
-  }
-}
-
-                
-        </style>
-    </head>
-    <body style="max-height: 100vh;">
-        <header class="header">
-            <div class="header-image"></div>
-        </header>
-        <section>
-            <div class="rules-wrap">
-            <div class="rules">
-                {% block rules %}
-                {% endblock %}
-            </div>
-            <main class="main_section index_main_section">
-                <!-- This will ensure that all pages will have a consistent layout and styling -->
-                {% block content %}
-                {% endblock %}
-            </main>
-            </div>
-            <div class="wrapper">
-            <div class="history_box">
-                <!-- Help meh idk what im doing :v -->
-                {% block history_box %}
-                {% endblock %}
-                
-            </div>
-           
-            <div class="secret_box">
-                <!-- Help meh idk what im doing :v -->
-                {% block secret_box %}
-                {% endblock %}
-            </div>
-
-            <div class="plot_quantum">
-                <!-- Help meh idk what im doing :v -->
-                {% block plot_quantum %}
-                {% endblock %}
-            </div>
+  <body>
+    <div class="page">
+      <img class="header" src="{{ url_for('static', filename='images/header.svg') }}">
+      
+      <main class="half-splitter">
+        <div class="content content--half">
+          <section class="container content-box">
+            {% block content %} {% endblock %}
+          </section>
         </div>
-        </section>
-        
-        <!-- In case we need a specific Javascript Script for only a specific page -->
-        {% block script %}
-        {% endblock %}
-    </body>
+
+        <div class="content content--half">
+          <section class="container history-box">
+            {% block history_box %} {% endblock %}
+          </section>
+
+          <section class="container secret-box">
+            {% block secret_box %} {% endblock %}
+          </section>
+
+          <section class="container quantum-box plot_quantum" id="plotContainer" style="display: none;">
+            {% block plot_quantum %} {% endblock %}
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <img class="cit-logo" src="{{ url_for('static', filename='images/CIT Logo.png') }}">
+      </footer>
+    </div>
+
+    <!-- In case we need a specific Javascript Script for only a specific page -->
+    {% block script %} {% endblock %}
+  </body>
 </html>
