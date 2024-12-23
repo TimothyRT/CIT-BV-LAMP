@@ -4,3 +4,4 @@ static/images/quantum_plot*
 >>>>>>> 459200d85d222d552984c24efdea395b1cafded1
 venv/
 recursive_search.ipynb
+flask_session/
