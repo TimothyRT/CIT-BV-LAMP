@@ -1,72 +1,66 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 
-{% block stylesheet %}
-<link rel="stylesheet" href="{{ url_for('static', filename='styling/clas_comp.css') }}">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-{% endblock %}
 {% block content %}
 
-<div class="overlay" id="overlay"></div>
-<div class="modal fade" id="popup" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Congratulations!</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>You guessed the correct number: <span id="secretNumberSpan"></span></p>
-        <p>You used <span id="chancesUsedSpan"></span> chances</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+  <div class="overlay" id="overlay"></div>
+  <div class="modal fade" id="popup" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Congratulations!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span class="button__label" aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You guessed the correct number: <span id="secretNumberSpan"></span></p>
+          <p>You used <span id="chancesUsedSpan"></span> chances</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="button" data-dismiss="modal"><span class="button__label">Close</span></button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<h2 class="answer">Oracle</h2>
-<div id="chances"></div>
-<form method="post">
+  <h2 class="heading">Oracle</h2>
+  <div id="chances"></div>
+  <div>
     {% for lamp_number in range(n_length) %}
-    <div>
+      <div>
         <label class="toggle-label">
-            {% if lamp_number == 0 %}
-                Lamp 1: <span class="electricity-indicator">Electricity</span>
-            {% else %}
-                Lamp {{ lamp_number + 1 }}:
-            {% endif %}
+          {% if lamp_number == 0 %}
+            Lamp 1: <span class="electricity-indicator">Electricity</span>
+          {% else %}
+            Lamp {{ lamp_number + 1 }}:
+          {% endif %}
         </label>
         <label class="toggle-button">
-            <input type="checkbox" name="lamp{{ lamp_number }}" id="lamp{{ lamp_number }}">
-            <span class="slider"></span>
-            <span class="green-box"></span>
+          <input type="checkbox" name="lamp{{ lamp_number }}" id="lamp{{ lamp_number }}">
+          <span class="slider"></span>
+          <span class="green-box"></span>
         </label>
-    </div>
+      </div>
     {% endfor %}
-</form>
+  </div>
 
-<hr>
-<div class="button-group">
-<button type="button" class="btn btn-primary" onClick="startGame()">Start</button>
-<button type="button" class="btn btn-secondary" onClick="returnToMain()">Return</button>
-</div>
-<div id="result"></div>
+  <div class="button-group">
+    <button type="button" class="button button--small" onClick="startGame()">
+      <span class="button__label">Start</span>
+    </button>
+    <button type="button" class="button button--secondary button--small" onClick="returnToMain()">
+      <span class="button__label button--secondary__label">Return</span>
+    </button>
+  </div>
+
+  <div id="result"></div>
 
 {% endblock %}
 
 {% block history_box %}
-<style>
-  .history_box, .secret_box {
-    display: block;
-  }
-</style>
 
-<div class="history-box">
-  <h2 class="answer">Iteration</h2>
+  <h2 class="heading">Iteration</h2>
   <table id="historyTable">
     <tr>
       <th>Number</th>
@@ -85,29 +79,30 @@
       </tr>
     {% endfor %}
   </table>
-</div>
 
 {% endblock %}
 
 {% block secret_box %}
-<h2 class="answer">Answer</h2>
-<div class="lamp-line lamp-pattern-v2">
-    {% for lamp_number in range(n_length) %}
-    <div class="lamp-container">
-      <div class="lamp-label-container">
-        <label class="toggle-label">
-          Lamp {{ lamp_number + 1 }}
+
+  <h2 class="heading">Answer</h2>
+  <div class="lamp-line lamp-pattern-v2">
+      {% for lamp_number in range(n_length) %}
+      <div class="lamp-container">
+        <div class="lamp-label-container">
+          <label class="toggle-label">
+            Lamp {{ lamp_number + 1 }}
+          </label>
+        </div>
+        <label class="toggle-button ">
+          <input type="checkbox" name="answer_lamp{{ lamp_number }}" id="answer_lamp{{ lamp_number }}">
+          <span class="slider"></span>
+          <span class="green-box"></span>
         </label>
       </div>
-      <label class="toggle-button ">
-        <input type="checkbox" name="answer_lamp{{ lamp_number }}" id="answer_lamp{{ lamp_number }}">
-        <span class="slider"></span>
-         <span class="green-box"></span>
-      </label>
-    </div>
-    <input type="text" id="numpadInput" readonly>
-    {% endfor %}
-</div>
+      <input type="text" id="numpadInput" readonly>
+      {% endfor %}
+  </div>
+
 {% endblock %}
 
 {% block script %}
@@ -246,11 +241,9 @@
 
     document.addEventListener('DOMContentLoaded', document.getElementById('numpadInput').value = '')
 
-
     function returnToMain() {
       window.location.href = "/not_play_again"
     }
-
 
   </script>
 {% endblock %}

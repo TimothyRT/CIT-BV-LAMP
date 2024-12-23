@@ -1,53 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-}
 
-h1 {
-    color: #333;
-    text-align: center;
-}
-
-h2 {
-    color: #666;
-}
-
-p {
-    color: #777;
-}
-
-form {
-    margin-top: 10px;
-    text-align: center;
-}
-
-#game_form label{
-    font-size: 20px;
-    margin-bottom: 10px;
-    display: block;
-    color: #333;
-}
-
-#game_form input[type="text"],
-#game_form input[type="number"] {
-  font-family: Arial, sans-serif;
-  font-size: 20px;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#game_form select {
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-    width: 100%;
-    box-sizing: border-box;
-  }
 
 
 #rules {
@@ -65,21 +16,6 @@ form {
   #rule_title {
     text-align: center;
   }
-  
-
-button {
-    padding: 10px 20px;
-    background-color: maroon;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 5px;
-}
-
-button:hover {
-    background-color: rgb(51, 9, 9);
-}
 
 .tooltip {
     position: relative;
@@ -134,11 +70,6 @@ button:hover {
 .explanation:hover::before {
     visibility: visible;
     opacity: 1;
-}
-
-.qr-code-container {
-    width: 300px;
-    margin: 0 auto;
 }
 
 .logo_title{
@@ -200,70 +131,4 @@ button:hover {
 
 #bv_description p:last-of-type, #rules ul li:last-of-type {
     margin-bottom: 0; 
-}
-
-
-
-
-.toggle-label {
-display: block;
-margin-bottom: 10px;
-}
-
-.toggle-button {
-display: inline-block;
-position: relative;
-cursor: pointer;
-user-select: none;
-}
-
-.toggle-button input {
-display: none;
-}
-
-.slider {
-position: relative;
-display: inline-block;
-width: 60px;
-height: 34px;
-background-color: #ccc;
-transition: 0.4s;
-border-radius: 34px;
-margin-left: 10px;
-}
-
-.slider:before {
-position: absolute;
-content: "";
-height: 26px;
-width: 26px;
-left: 4px;
-top: 4px;
-background-color: white;
-transition: 0.4s;
-border-radius: 50%;
-}
-
-input:checked + .slider {
-background-color: #2196F3;
-}
-
-input:checked + .slider:before {
-transform: translateX(26px);
-}
-
-.green-box {
-display: inline-block;
-width: 40px;
-height: 40px;
-background-image: url("/static/images/off.svg");
-background-size: contain;
-background-repeat: no-repeat;
-margin-left: 25px;
-border-radius: 4px;
-opacity: 1;
-}
-
-input:checked + .slider + .green-box {
-background-image: url("/static/images/on.svg");
 }

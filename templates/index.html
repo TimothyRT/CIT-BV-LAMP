@@ -1,31 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HomePage BV</title>
-    {% block stylesheet %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styling/homepage_bv.css') }}">
-    {% endblock %}
-</head>
-<body>
-    <div class="left">
-        <div class="left-box">
-            <img src="static\images\animation.webp" alt="animasi" width="1000" height="1000" />
-        </div>
-    </div>
-    <div class="right">
-        <div class="right-box">
-            <img src="static\images\logo_utama.svg" alt="tebak_lampu_text" width="1000" height="1000" />
-            <button class="button" id="playButton">Play</button>
-        </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Bernstein-Vazirani</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styling/styles.css') }}"
+    >
+  </head>
+  <body>
+    <div class="page">
+      <img class="header" src="{{ url_for('static', filename='images/header.svg') }}">
+      <main class="content">
+        <h1 class="title">Bernstein-Vazirani Lamp Game</h1>
+        <section class="formatter-button-subtitle">
+          <button class="button" id="playButton"><span class="button__label">Play</span></button>
+          <h2 class="subtitle">Get to understand the quantum algorithm through an interactive browser experience.</h2>
+        </section>
+      </main>
+      <footer class="footer">
+        <img class="cit-logo" src="{{ url_for('static', filename='images/CIT Logo.png') }}">
+      </footer>
     </div>
 
     <script>
-        document.getElementById('playButton').addEventListener('click', function() {
-            window.location.href = '/homepage';
+      document
+        .getElementById("playButton")
+        .addEventListener("click", function () {
+          window.location.href = "/homepage";
         });
     </script>
-</body>
+  </body>
 </html>
