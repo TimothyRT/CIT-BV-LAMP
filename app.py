@@ -25,7 +25,7 @@ secret_length = None
 
 def apply_oracle(secret):
     num_of_bit = len(secret)
-    oracle_circuit = QuantumCircuit(num_of_bit + 1, num_of_bit)
+    oracle_circuit = QuantumCircuit(num_of_bit + 1)
     oracle_circuit.h(range(num_of_bit))
     oracle_circuit.x(num_of_bit)
     oracle_circuit.h(num_of_bit)
