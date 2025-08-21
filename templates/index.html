@@ -11,17 +11,21 @@
     >
   </head>
   <body>
-    <div class="page">
-      <img class="header" src="{{ url_for('static', filename='images/header.svg') }}">
-      <main class="content">
-        <h1 class="title">Bernstein-Vazirani Lamp Game</h1>
-        <section class="formatter-button-subtitle">
-          <button class="button" id="playButton"><span class="button__label">Play</span></button>
-          <h2 class="subtitle">Get to understand the quantum algorithm through an interactive browser experience.</h2>
+    <div class="landing">
+      <header class="landing__header"></header>
+      
+      <main class="landing__content">
+        <h1 class="landing__title">
+          Bernstein-Vazirani Lamp Game
+        </h1>
+        <button class="button landing__button" id="playButton">Play</button>
+        <section class="landing__subtitle">
+          Get to understand the quantum algorithm through an interactive browser experience.
         </section>
       </main>
-      <footer class="footer">
-        <img class="cit-logo" src="{{ url_for('static', filename='images/CIT.png') }}">
+
+      <footer class="landing__footer">
+        <img class="landing__cit-logo" src="{{ url_for('static', filename='images/CIT.png') }}">
       </footer>
     </div>
 

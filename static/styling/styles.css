@@ -6,6 +6,25 @@
 /* Reset CSS */
 @import url("reset.css");
 
+/* Joshua */
+/* 7. Inherit fonts for form controls */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+}
+
 /* -------------------------- */
 /* Generic */
 
@@ -557,5 +576,93 @@ background-image: url("/static/images/on.svg");
 @media (max-width: 768px) {
   #quantumPlot {
     width: 100%;
+  }
+}
+
+/* -------------------------- */
+/* Landing page */
+
+.landing {
+  display: block;
+  min-height: 100svh;
+  width: 100%;
+}
+
+.landing__header {
+  background-image: url('/static/images/header.svg');
+  background-size: cover;
+  height: 24svh;
+  width: 100%;
+}
+
+.landing__content {
+  box-sizing: border-box;
+  height: 56svh;
+  margin: 0 auto;
+  padding: 16px 32px;
+  width: 100%;
+  /* Flex container */
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: center;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.landing__footer {
+  background-image: url('/static/images/footer.svg');
+  background-size: cover;
+  height: 20svh;
+  position: relative;
+  width: 100%;
+}
+
+.landing__cit-logo {
+  height: auto;
+  margin: 0 1rem 1rem 0;
+  width: 8rem;
+  /* Positioned */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.landing__title {
+  color: var(--primary-500);
+  font-size: 3rem;
+  min-width: 0;
+  /* Flex item */
+  flex: 0 1 2000px;
+}
+
+.landing__button {
+  color: white;
+  font-size: 1.5rem;
+  min-width: 0;
+  padding: 8px 16px;
+  /* Flex item */
+  flex: 0 2 auto;
+}
+
+.landing__subtitle {
+  color: var(--primary-400);
+  font-size: 1.5rem;
+  /* Flex item */
+  flex: 0 1 200px;
+}
+
+@media only screen and (min-width: 768px) {
+  .landing__content {
+    width: 80svw;
+  }
+
+  .landing__button {
+    min-width: 8rem;
+  }
+
+  .landing__subtitle {
+    flex: 0 2 600px;
   }
 }
