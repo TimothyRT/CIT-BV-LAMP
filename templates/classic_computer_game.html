@@ -163,7 +163,7 @@
       chancesElement.textContent = `Chances: ${chances}`;
     }
 
-  function klasik_tebak(n) {
+  function classical_solution(n) {
     function toggleLamps(i) {
       const lamps = document.getElementById(`lamp${i}`);
       lamps.checked = !lamps.checked;
@@ -218,7 +218,7 @@
   }
   
     function startGame(){
-      klasik_tebak({{ n_length }});
+      classical_solution({{ n_length }});
     }
       
     function oracleButtonOnClick() {
